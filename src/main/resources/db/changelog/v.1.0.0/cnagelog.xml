@@ -9,5 +9,6 @@
     </changeSet>
 
     <include file="create-table-product.xml" relativeToChangelogFile="true"/>
+    <include file="add-product.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

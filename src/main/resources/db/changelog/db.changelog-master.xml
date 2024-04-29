@@ -6,3 +6,5 @@
 
 <include file="v.1.0.0/cnagelog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
+
+

@@ -2,7 +2,8 @@ package de.aittr.g_38_jp_shop.service;
 
 
 import de.aittr.g_38_jp_shop.domain.entity.Product;
-import de.aittr.g_38_jp_shop.repository.interfaces.ProductRepository;
+
+import de.aittr.g_38_jp_shop.repository.ProductRepository;
 import de.aittr.g_38_jp_shop.service.interfaces.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,8 +11,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Service
+
 @RequiredArgsConstructor
+@Service
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
@@ -29,12 +31,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getById(Long id) {
-
         if (id == null || id < 1) {
-            throw new RuntimeException("Product ID is incorrect");
+            throw new RuntimeException("Product id is incorrect");
         }
 
-        Product product = repository.getById(id);
+        Product product = repository.findById(id).orElse(null);
 
         if (product == null) {
             throw new RuntimeException("Product not found");

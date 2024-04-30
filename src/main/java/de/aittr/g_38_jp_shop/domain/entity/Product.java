@@ -1,18 +1,39 @@
 package de.aittr.g_38_jp_shop.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Data
+
+@Entity
+@Table(name = "product")
+@NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @Getter
     private Long id;
+
+    @Column(name = "title")
+    @Getter
+    @Setter
     private String title;
+
+    @Column(name = "price")
+    @Getter
+    @Setter
     private BigDecimal price;
+
+    @Column(name = "is_active")
+    @Getter
+    @Setter
     private boolean isActive;
+
 
     @Override
     public String toString() {

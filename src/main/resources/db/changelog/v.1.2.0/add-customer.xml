@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="add_customer" author="rs">
+
+        <insert tableName="customer">
+            <column name="name" value="John"/>
+         </insert>
+
+        <insert tableName="customer">
+            <column name="name" value="Anna"/>
+        </insert>
+
+        <insert tableName="customer">
+            <column name="name" value="Helen"/>
+        </insert>
+
+        <insert tableName="customer">
+             <column name="name" value="Luke"/>
+        </insert>
+
+        <sql>
+            INSERT INTO cart (customer_id)
+            SELECT id FROM customer;
+        </sql>
+
+
+    </changeSet>
+
+    <changeSet id="update_customer_cart_id" author="rs">
+        <sql>UPDATE customer
+             SET cart_id = cart.id
+                 FROM cart
+             WHERE customer.id = cart.customer_id;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

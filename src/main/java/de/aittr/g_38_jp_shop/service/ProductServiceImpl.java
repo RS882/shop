@@ -1,10 +1,13 @@
 package de.aittr.g_38_jp_shop.service;
 
 
-import de.aittr.g_38_jp_shop.domain.entity.Product;
+import de.aittr.g_38_jp_shop.domain.dto.ProductDto;
 
+
+import de.aittr.g_38_jp_shop.domain.entity.Product;
 import de.aittr.g_38_jp_shop.repository.ProductRepository;
 import de.aittr.g_38_jp_shop.service.interfaces.ProductService;
+import de.aittr.g_38_jp_shop.service.mapping.ProductMappingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,35 +20,35 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
+    private final ProductMappingService mappingService;
 
 
     @Override
-    public Product save(Product product) {
+    public ProductDto save(ProductDto product) {
         return null;
     }
 
     @Override
-    public List<Product> getAll() {
+    public List<ProductDto> getAll() {
         return null;
     }
 
     @Override
-    public Product getById(Long id) {
+    public ProductDto getById(Long id) {
         if (id == null || id < 1) {
             throw new RuntimeException("Product id is incorrect");
         }
 
-        Product product = repository.findById(id).orElse(null);
+        Product product = repository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Product not found"));
 
-        if (product == null) {
-            throw new RuntimeException("Product not found");
-        }
 
-        return product;
+
+        return mappingService.mapEntityToDto(product);
     }
 
     @Override
-    public void update(Product product) {
+    public void update(ProductDto product) {
 
     }
 

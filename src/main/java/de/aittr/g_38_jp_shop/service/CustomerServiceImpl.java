@@ -6,6 +6,7 @@ import de.aittr.g_38_jp_shop.repository.CartRepository;
 import de.aittr.g_38_jp_shop.repository.CustomerRepository;
 import de.aittr.g_38_jp_shop.service.interfaces.CartService;
 import de.aittr.g_38_jp_shop.service.interfaces.CustomerService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        
 
     }
 
@@ -61,23 +63,18 @@ public class CustomerServiceImpl implements CustomerService {
     public void update(Customer customer) {
         if (customer == null) throw new RuntimeException("Customer data is wrong");
         if (!repository.existsById(customer.getId())) throw new RuntimeException("Customer not found");
-        Customer currentCustomer = repository.findById(customer.getId())
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
         try {
-            repository.save(Customer.builder()
-                    .id(customer.getId())
-                    .name(customer.getName())
-                    .isActive(customer.getIsActive() == null ?
-                            currentCustomer.getIsActive() : customer.getIsActive())
-                    .cart(customer.getCart()==null?currentCustomer.getCart():
-                            customer.getCart() )
-                    .build());
+            customer.setIsActive(customer.getIsActive() != null ? customer.getIsActive() : true);
+            repository.save(customer);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         if (id == null) throw new RuntimeException("Customer id is wrong");
 
@@ -87,20 +84,21 @@ public class CustomerServiceImpl implements CustomerService {
 
             customer.setIsActive(false);
 
-            repository.save(customer);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
+    @Transactional
     public void deleteByName(String name) {
         if (name == null) throw new RuntimeException("Customer id is wrong");
         Customer customer = repository.findByName(name)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
         customer.setIsActive(false);
 
-        repository.save(customer);
+
     }
 
     @Override

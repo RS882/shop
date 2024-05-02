@@ -2,20 +2,21 @@ package de.aittr.g_38_jp_shop.service.interfaces;
 
 
 
-import de.aittr.g_38_jp_shop.domain.entity.Product;
+import de.aittr.g_38_jp_shop.domain.dto.ProductDto;
+
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {
 
-    Product save(Product product);
+    ProductDto save(ProductDto product);
 
-    List<Product> getAll();
+    List<ProductDto> getAll();
 
-    Product getById(Long id);
+    ProductDto getById(Long id);
 
-    void update(Product product);
+    void update(ProductDto product);
 
     void deleteById(Long id);
 

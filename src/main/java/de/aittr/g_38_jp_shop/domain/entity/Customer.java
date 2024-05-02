@@ -10,28 +10,27 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "cart")
 @Builder
+@Data
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @Getter
+
     private Long id;
 
     @Column(name = "name")
-    @Getter
-    @Setter
+
     private String name;
 
     @Column(name = "is_active")
-    @Getter
-    @Setter
+
     private Boolean isActive;
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
-    @Getter
-    @Setter
+
     private Cart cart;
+
 
 
 }

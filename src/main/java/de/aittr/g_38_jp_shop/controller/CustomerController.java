@@ -3,6 +3,7 @@ package de.aittr.g_38_jp_shop.controller;
 
 import de.aittr.g_38_jp_shop.domain.entity.Customer;
 import de.aittr.g_38_jp_shop.service.interfaces.CustomerService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +12,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/customer")
 @RequiredArgsConstructor
+
 public class CustomerController {
 
     private final CustomerService service;
+
 
     @GetMapping("/all")
     public List<Customer> getAllCustomers() {

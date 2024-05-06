@@ -5,9 +5,11 @@ import de.aittr.g_38_jp_shop.domain.dto.ProductDto;
 
 
 import de.aittr.g_38_jp_shop.domain.entity.Product;
+import de.aittr.g_38_jp_shop.domain.entity.User;
 import de.aittr.g_38_jp_shop.repository.ProductRepository;
 import de.aittr.g_38_jp_shop.service.interfaces.ProductService;
 import de.aittr.g_38_jp_shop.service.mapping.ProductMappingService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +27,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto save(ProductDto product) {
-        return null;
+        Product newProduct = mappingService.mapDtoToEntity(product);
+        repository.save(newProduct);
+        return mappingService.mapEntityToDto(newProduct);
+
     }
 
     @Override
     public List<ProductDto> getAll() {
-        return null;
+
+        return repository.findAll().stream()
+                .filter(Product::isActive)
+                .map(mappingService::mapEntityToDto)
+                .toList();
     }
 
     @Override
@@ -38,19 +47,32 @@ public class ProductServiceImpl implements ProductService {
         if (id == null || id < 1) {
             throw new RuntimeException("Product id is incorrect");
         }
-
         Product product = repository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Product not found"));
-
-
+                .orElseThrow(() -> new RuntimeException("Product not found"));
 
         return mappingService.mapEntityToDto(product);
     }
 
+    @Transactional
     @Override
     public void update(ProductDto product) {
+        Long id = product.getProductId();
+        if (id == null || id < 1) throw new RuntimeException("Product id is incorrect");
+
+        try {
+            Product updateProduct = repository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Product not found"));
+            updateProduct.setTitle(product.getTitle() == null ? updateProduct.getTitle() : product.getTitle());
+            updateProduct.setPrice(product.getPrice() == null ? updateProduct.getPrice() : product.getPrice());
+
+
+        } catch (Exception ex) {
+            throw new RuntimeException("Product not found");
+        }
+
 
     }
+
 
     @Override
     public void deleteById(Long id) {

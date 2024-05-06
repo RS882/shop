@@ -6,3 +6,10 @@ spring:
     password: rootrs
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
+  jpa:
+    properties:
+      hibernate:
+        auto_quote_keyword: true
+key:
+  access: 8yNLSHtdF0TL9ncU7u7grovQeXckLJERFqzrYgsc9ug=
+  refresh: rGK1pQoGDSfbVs8Y/Vu45sGYQVVP8VFUumXrAhvEq7k=

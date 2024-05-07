@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .hasAnyRole("ADMIN", "USER", "MANAGER")
                         .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/products").hasAnyRole("ADMIN", "MANAGER")
-                        .requestMatchers(HttpMethod.PUT, "/auth/login", "/auth/access").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/access").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)

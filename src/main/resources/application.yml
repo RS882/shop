@@ -13,3 +13,8 @@ spring:
 key:
   access: 8yNLSHtdF0TL9ncU7u7grovQeXckLJERFqzrYgsc9ug=
   refresh: rGK1pQoGDSfbVs8Y/Vu45sGYQVVP8VFUumXrAhvEq7k=
+logging:
+  file:
+    name: logs/log.log
+  level:
+    root: info

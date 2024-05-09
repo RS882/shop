@@ -11,15 +11,21 @@ import de.aittr.g_38_jp_shop.service.interfaces.ProductService;
 import de.aittr.g_38_jp_shop.service.mapping.ProductMappingService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import org.slf4j.Logger;
 
 
 @RequiredArgsConstructor
 @Service
+//@Slf4j
 public class ProductServiceImpl implements ProductService {
+
+//    private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class.getName() );
 
     private final ProductRepository repository;
     private final ProductMappingService mappingService;
@@ -44,6 +50,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto getById(Long id) {
+
+//        log.info("DA");
         if (id == null || id < 1) {
             throw new RuntimeException("Product id is incorrect");
         }
@@ -63,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
             Product updateProduct = repository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Product not found"));
             updateProduct.setTitle(product.getTitle() == null ? updateProduct.getTitle() : product.getTitle());
-            updateProduct.setPrice(product.getPrice() == null ? updateProduct.getPrice() : product.getPrice());
+            updateProduct.setPrice(product.getPrice()  == null ? updateProduct.getPrice() : product.getPrice());
 
 
         } catch (Exception ex) {

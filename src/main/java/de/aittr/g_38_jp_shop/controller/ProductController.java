@@ -22,10 +22,6 @@ public class ProductController {
     @GetMapping("/{id}")
     public ProductDto getById(@PathVariable Long id){
 
-        if (id<1){
-            throw new FirstTestException("ID is incorrect");
-        }
-
         return service.getById(id);
     }
 
@@ -43,6 +39,24 @@ public class ProductController {
     public String updateProduct( @RequestBody ProductDto product){
         service.update(product);
         return "Product updated successfully";
+    }
+
+    @DeleteMapping("/{id}")
+    public String removeProductById( @PathVariable Long id){
+        service.deleteById(id);
+        return "Product deleted successfully";
+    }
+
+    @DeleteMapping
+    public String removeProductByTitle( @RequestBody ProductDto product){
+        service.deleteByTitle(product);
+        return "Product deleted successfully";
+    }
+
+    @PutMapping("/restore/{id}")
+    public String restoreProductByTitle( @PathVariable Long id){
+        service.restoreById(id);
+        return "Product restored successfully";
     }
 
     // 1 СПОСОБ обработки ошибок

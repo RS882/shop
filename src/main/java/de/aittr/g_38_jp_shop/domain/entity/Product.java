@@ -34,7 +34,7 @@ public class Product {
     @Column(name = "is_active")
     @Getter
     @Setter
-    private boolean isActive;
+    private Boolean isActive;
 
 
     @Override

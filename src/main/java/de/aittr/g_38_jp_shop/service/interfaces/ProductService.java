@@ -20,7 +20,7 @@ public interface ProductService {
 
     void deleteById(Long id);
 
-    void deleteByTitle(String title);
+    void deleteByTitle(ProductDto product);
 
     void restoreById(Long id);
 

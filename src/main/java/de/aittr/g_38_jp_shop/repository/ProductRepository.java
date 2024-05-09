@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // В данном случае тело метода и SQL запрос
@@ -14,5 +17,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // В данном случае тело метода будет сгенерировано фреймворком,
     // но сам SQL запрос он применит тот, который мы ему дали
     @Query(value = "SELECT * FROM product WHERE title = :title", nativeQuery = true)
-    Product findByTitle(@Param("title") String productTitle);
+    Optional<Product> findByTitle(@Param("title") String productTitle);
 }

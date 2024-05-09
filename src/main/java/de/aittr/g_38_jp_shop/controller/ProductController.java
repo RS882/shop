@@ -6,6 +6,7 @@ import de.aittr.g_38_jp_shop.exception_handler.Response;
 import de.aittr.g_38_jp_shop.exception_handler.exceptions.FirstTestException;
 import de.aittr.g_38_jp_shop.service.interfaces.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,8 +45,16 @@ public class ProductController {
         return "Product updated successfully";
     }
 
+    // 1 СПОСОБ обработки ошибок
+    // ПЛЮС - у нас есть обработчик ошибок для контроллера (всех его методов)
+    // Мы можем точечно настраивать обработчик для данного конкретного контроллера,
+    // если нам требуется разная логика обработки того же самого исключения
+    // в разных контроллерах.
+    // МИНУС - если нам не требуется разной логики обработки ошибок,
+    // нам придётся писать такой обработчик в каждом контроллере.
     @ExceptionHandler(FirstTestException.class)
-    public Response handleExcepton(FirstTestException e){
+    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
+    public Response handleException(FirstTestException e) {
         return new Response(e.getMessage());
     }
 }

@@ -128,5 +128,5 @@ public class AspectLogging {
         String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
         log.info("Method {} of the class {} threw an exception: {}", methodName, className, e.getMessage());
     }
-    
+
 }

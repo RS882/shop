@@ -1,9 +1,9 @@
 spring:
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/g_38_jp_shop
-#    username: postgres
-#    driver-class-name: org.postgresql.Driver
-#    password: rootrs
+  datasource:
+    url: jdbc:postgresql://localhost:5432/g_38_jp_shop
+    username: postgres
+    driver-class-name: org.postgresql.Driver
+    password: rootrs
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
   jpa:
@@ -15,5 +15,11 @@ key:
   access: 8yNLSHtdF0TL9ncU7u7grovQeXckLJERFqzrYgsc9ug=
   refresh: rGK1pQoGDSfbVs8Y/Vu45sGYQVVP8VFUumXrAhvEq7k=
 
+logging:
+  file:
+    name: logs/log.log
+  level:
+    root: info
+
 messages:
-  hello: Hello from Digital Ocean!
+  hello: Hello from local application!

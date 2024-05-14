@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,6 +78,8 @@ class ProductControllerTest {
     private final String LOGIN_ENDPOINT = "/login";
     private final String ACCESS_ENDPOINT = "/access";
     private final String ALL_ENDPOINT = "/all";
+
+    private final String AUTH_HEADER_NAME ="Authorization";
 
     // префикс для токена
     private final String BEARER_PREFIX = "Bearer ";
@@ -186,7 +189,8 @@ class ProductControllerTest {
         assertNotNull(response.getBody(), "Authorization response body is null");
         userAccessToken = BEARER_PREFIX + response.getBody().getAccessToken();
     }
-// в имени теста пишем -позиьтивній или негативній и подробно в назанянеии указваем что он делает
+
+    // в имени теста пишем -позиьтивній или негативній и подробно в назанянеии указваем что он делает
     @Test
     public void positiveGettingAllProductsWithoutAuthorization() {
         // собираем url для http запроса
@@ -201,5 +205,44 @@ class ProductControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has unexpected status");
         // проверяем наличия тела ответа
         assertTrue(response.hasBody(), "Response does not contain body");
+    }
+
+    @Test
+    public void negativeSavingProductWithoutAuthorization() {
+        String url = URL_PREFIX + port + PRODUCTS_RESOURCE_NAME;
+
+        HttpEntity<ProductDto> request = new HttpEntity<>(testProduct, headers);
+
+        ResponseEntity<ProductDto> response =
+                template.exchange(
+                        url,
+                        HttpMethod.POST,
+                        request,
+                        ProductDto.class
+                );//ProductDto.class -для джексона чтобі корректно проконверировать в json
+
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        assertFalse(response.hasBody());
+    }
+
+    public void positiveSavingProductWithAdminAuthoriyation(){
+        String url = URL_PREFIX + port + PRODUCTS_RESOURCE_NAME;
+        headers.put(AUTH_HEADER_NAME, List.of(adminAccessToken));
+        HttpEntity<ProductDto> request = new HttpEntity<>(testProduct, headers);
+
+        ResponseEntity<ProductDto> response =
+                template.exchange(
+                        url,
+                        HttpMethod.POST,
+                        request,
+                        ProductDto.class
+                );
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        
+        ProductDto savedProduct = response.getBody();
+        assertNotNull(savedProduct);
+        assertEquals(TEST_PRODUCT_TITLE, savedProduct.getTitle());
+        assertNotNull(savedProduct.getProductId());
     }
 }

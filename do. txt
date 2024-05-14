@@ -1,0 +1,5 @@
+DB_HOST=${dbshop.HOSTNAME}
+DB_PORT=${dbshop.PORT}
+DB_NAME=${dbshop.DATABASE}
+DB_USERNAME=${dbshop.USERNAME}
+DB_PASSWORD=${dbshop.PASSWORD}

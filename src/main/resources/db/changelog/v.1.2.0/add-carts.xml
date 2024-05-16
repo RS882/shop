@@ -4,26 +4,24 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
-    <changeSet id="add_customer" author="rs">
+    <changeSet id="add_carts" author="rs">
 
-        <insert tableName="customer">
-            <column name="name" value="John"/>
-         </insert>
-
-        <insert tableName="customer">
-            <column name="name" value="Anna"/>
+        <insert tableName="cart">
+            <column name="customer_id" value="1"/>
         </insert>
 
-        <insert tableName="customer">
-            <column name="name" value="Helen"/>
+        <insert tableName="cart">
+            <column name="customer_id" value="2"/>
         </insert>
 
-        <insert tableName="customer">
-             <column name="name" value="Luke"/>
+        <insert tableName="cart">
+            <column name="customer_id" value="3"/>
+        </insert>
+
+        <insert tableName="cart">
+            <column name="customer_id" value="4"/>
         </insert>
 
     </changeSet>
-
-
 
 </databaseChangeLog>

@@ -8,8 +8,12 @@
         <tagDatabase tag="v.1.2.0"/>
     </changeSet>
 
-    <include file="create-table-cart.xml" relativeToChangelogFile="true"/>
-    <include file="add-cartid_to customer.xml" relativeToChangelogFile="true"/>
     <include file="add-customer.xml" relativeToChangelogFile="true"/>
+    <include file="create-table-cart.xml" relativeToChangelogFile="true"/>
+     <include file="create-foreign-key-cart-to-customer.xml" relativeToChangelogFile="true"/>
+    <include file="add-carts.xml" relativeToChangelogFile="true"/>
+    <include file="create-table-cart-product.xml" relativeToChangelogFile="true"/>
+    <include file="create-foreign-keys-cart-product.xml" relativeToChangelogFile="true"/>
+
 
 </databaseChangeLog>

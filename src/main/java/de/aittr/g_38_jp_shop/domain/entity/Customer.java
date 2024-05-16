@@ -26,10 +26,8 @@ public class Customer {
 
     private Boolean isActive;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id", referencedColumnName = "id")
-
-    private Cart cart;
+    @OneToOne(mappedBy = "customer")
+      private Cart cart;
 
 
 

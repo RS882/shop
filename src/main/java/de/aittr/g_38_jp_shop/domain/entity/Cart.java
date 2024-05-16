@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 
 
 @Entity
@@ -13,21 +14,25 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "customer")
 @Builder
+@Data
 public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @Getter
     private Long id;
 
 
     @OneToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    @Getter
-    @Setter
-    @JsonIgnore
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @ManyToMany
+    @JoinTable(
+            name = "cart_product",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> products;
 
 }

@@ -40,8 +40,9 @@ public class SecurityConfig {
                         .hasAnyRole("ADMIN", "USER", "MANAGER")
                         .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/products").hasAnyRole("ADMIN", "MANAGER")
-                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/access").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/access","/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/hello").permitAll()
+
                         .anyRequest().authenticated())
                 //                        .anyRequest().permitAll())
                 .httpBasic(AbstractHttpConfigurer::disable)

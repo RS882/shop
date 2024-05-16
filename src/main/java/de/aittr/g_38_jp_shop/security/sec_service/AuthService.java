@@ -2,11 +2,13 @@ package de.aittr.g_38_jp_shop.security.sec_service;
 
 import de.aittr.g_38_jp_shop.domain.entity.User;
 import de.aittr.g_38_jp_shop.security.sec_dto.TokenResponseDto;
-import de.aittr.g_38_jp_shop.service.UserService;
+
+import de.aittr.g_38_jp_shop.service.interfaces.UserService;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Nonnull;
 import jakarta.security.auth.message.AuthException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,10 @@ public class AuthService {
     public TokenResponseDto login(@Nonnull User inboundUser) throws AuthException {
         String username = inboundUser.getUsername();
         User foundUser = (User) userService.loadUserByUsername(username);
+
+        if (foundUser == null) throw new RuntimeException("User not found");
+
+        if(!foundUser.getIsActive()) throw new RuntimeException("User email isnt confirme");
 
         if (encoder.matches(inboundUser.getPassword(), foundUser.getPassword())) {
             String accessToken = tokenService.generateAcessToken(foundUser);

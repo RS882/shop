@@ -7,4 +7,6 @@ import java.util.UUID;
 public interface ConfirmationService {
 
     String generateConfirmationCode(User user);
+
+    boolean checkConfirmationCode(String confirmationCode);
 }

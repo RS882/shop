@@ -25,7 +25,7 @@ public class Product {
     @NotNull(message = "Product title cannot be null")
     @NotBlank(message = "Product title cannot be empty")
     @Pattern(
-            regexp = "[A-Z][a-z]{2,}",
+            regexp = "[A-Z][a-z ]{2,}",
             message = "Product title should be at list 3 character length" +
                     " start with capital letter and contain only latin symbols")
     private String title;
@@ -44,6 +44,8 @@ public class Product {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @Column(name = "image")
+    private String image;
 
     @Override
     public String toString() {

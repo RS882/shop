@@ -4,12 +4,11 @@ package de.aittr.g_38_jp_shop.service;
 import de.aittr.g_38_jp_shop.domain.dto.ProductDto;
 
 
-import de.aittr.g_38_jp_shop.domain.entity.Customer;
 import de.aittr.g_38_jp_shop.domain.entity.Product;
 
 import de.aittr.g_38_jp_shop.exception_handler.exceptions.IncorrectIdException;
 import de.aittr.g_38_jp_shop.exception_handler.exceptions.IncorrectTitleException;
-import de.aittr.g_38_jp_shop.exception_handler.exceptions.ProductNotFoundException;
+import de.aittr.g_38_jp_shop.exception_handler.exceptions.Product1NotFoundException;
 import de.aittr.g_38_jp_shop.exception_handler.exceptions.ProductServiceException;
 import de.aittr.g_38_jp_shop.repository.ProductRepository;
 import de.aittr.g_38_jp_shop.service.interfaces.ProductService;
@@ -57,11 +56,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
     @Transactional
     @Override
     public void update(ProductDto product) {
-        if(product==null) throw
+        if (product == null) throw
                 new ProductServiceException("Method of ProductServiceImpl worked incorrectly",
                         new IncorrectTitleException("Product is null"));
         Long id = product.getProductId();
@@ -86,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void deleteByTitle(ProductDto productDto) {
-        if(productDto==null) {
+        if (productDto == null) {
             new ProductServiceException("Method of ProductServiceImpl worked incorrectly",
                     new IncorrectTitleException("Product is null"));
         }
@@ -99,7 +97,7 @@ public class ProductServiceImpl implements ProductService {
         }
         Product product = repository.findByTitle(title)
                 .orElseThrow(() -> new ProductServiceException("Method of ProductServiceImpl worked incorrectly",
-                        new ProductNotFoundException("Product not found")));
+                        new Product1NotFoundException("Product not found")));
         product.setIsActive(false);
     }
 
@@ -124,6 +122,15 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
+    @Override
+    @Transactional
+    public void attachImage(String imgUrl, String productTitle) {
+        Product product = repository.findByTitle(productTitle)
+                .orElseThrow(() -> new ProductServiceException(productTitle));
+
+        product.setImage(imgUrl);
+    }
+
     private Product getProductById(Long id) {
         if (id == null || id < 1) {
             System.out.println();
@@ -133,6 +140,6 @@ public class ProductServiceImpl implements ProductService {
 
         return repository.findById(id)
                 .orElseThrow(() -> new ProductServiceException("Method of ProductServiceImpl worked incorrectly",
-                        new ProductNotFoundException("Product not found")));
+                        new Product1NotFoundException("Product not found")));
     }
 }

@@ -16,6 +16,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.I_AM_A_TEAPOT);
     }
 
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<Response> handleException(ProductNotFoundException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.I_AM_A_TEAPOT);
+    }
+
     @ExceptionHandler(FourthTestException.class)
     public ResponseEntity<Response> handleException(FourthTestException e) {
         Throwable childException = e.getCause();
@@ -48,7 +54,7 @@ public class GlobalExceptionHandler {
         if (causeClass.equals(IncorrectIdException.class) ||
                 causeClass.equals(IncorrectTitleException.class)) {
             httpStatus = HttpStatus.BAD_REQUEST;
-        } else if (causeClass.equals(ProductNotFoundException.class)) {
+        } else if (causeClass.equals(Product1NotFoundException.class)) {
             httpStatus = HttpStatus.NOT_FOUND;
         }
 
@@ -65,8 +71,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new Response(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<Response> handleException(ProductNotFoundException e) {
+    @ExceptionHandler(Product1NotFoundException.class)
+    public ResponseEntity<Response> handleException(Product1NotFoundException e) {
         return new ResponseEntity<>(new Response(e.getMessage()), HttpStatus.NOT_FOUND);
     }
 }

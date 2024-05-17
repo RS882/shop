@@ -16,6 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // В данном случае тело метода будет сгенерировано фреймворком,
     // но сам SQL запрос он применит тот, который мы ему дали
-    @Query(value = "SELECT * FROM product WHERE title = :title", nativeQuery = true)
+//    @Query(value = "SELECT * FROM product WHERE title = :title", nativeQuery = true)
     Optional<Product> findByTitle(@Param("title") String productTitle);
 }

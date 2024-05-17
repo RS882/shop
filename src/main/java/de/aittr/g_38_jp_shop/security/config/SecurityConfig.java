@@ -35,16 +35,16 @@ public class SecurityConfig {
                 .sessionManagement(x -> x
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(x -> x
-                        .requestMatchers(HttpMethod.GET, "/products/all").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/products")
-                        .hasAnyRole("ADMIN", "USER", "MANAGER")
-                        .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/products").hasAnyRole("ADMIN", "MANAGER")
-                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/access","/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/hello","/register").permitAll()
-
-                        .anyRequest().authenticated())
-                //                        .anyRequest().permitAll())
+//                        .requestMatchers(HttpMethod.GET, "/products/all").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/products")
+//                        .hasAnyRole("ADMIN", "USER", "MANAGER")
+//                        .requestMatchers(HttpMethod.POST, "/products","/files").hasRole("ADMIN")
+//                        .requestMatchers(HttpMethod.PUT, "/products").hasAnyRole("ADMIN", "MANAGER")
+//                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/access","/register").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/hello","/register").permitAll()
+//
+//                        .anyRequest().authenticated())
+                                        .anyRequest().permitAll())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
